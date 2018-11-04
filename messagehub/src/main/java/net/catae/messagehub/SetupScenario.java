@@ -18,7 +18,9 @@ public class SetupScenario implements CommandLineRunner {
 		while(!scenario.hasFinished()) {
 			Thread.sleep(1000);
 			System.out.println("running scenario " + scenario.getId());
-		}		
+		}
+
+		System.out.println("Done");
 	}
 	
 	public static Scenario create(Bank bank) {
@@ -43,8 +45,8 @@ public class SetupScenario implements CommandLineRunner {
 		
 		// setup scenario
 		return Scenario.create("scenario1", () -> {
-			bank.wait(new Flow[] {f1, f2, f3});
-			bank.wait(new Flow[] {ff});
+			Flow.wait(new Flow[] {f1, f2, f3});
+			Flow.wait(new Flow[] {ff});
 		});		
 	}
 	

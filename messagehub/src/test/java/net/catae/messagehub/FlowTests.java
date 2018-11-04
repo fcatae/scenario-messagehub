@@ -37,6 +37,20 @@ public class FlowTests {
 		assertTrue(flow.hasFinished());
 		assertTrue(flow.success());
 	}	
+
+	@Test
+	public void TestFlowWait() {
+		Branch branch = new Branch("b", 1000);
+		Account a = new Account("a");
+
+		Flow f1 = new Flow(branch, b -> { sleep(10); });
+		Flow f2 = new Flow(branch, b -> { b.credit(a, 500);; });
+
+		Flow.wait(new Flow[] { f1 });
+		Flow.wait(new Flow[] { f2 });
+		assertTrue(f1.hasFinished());
+		assertEquals(branch.total(), 500);
+	}
 	
 	void sleep(int miliseconds) {
 		try {Thread.sleep(miliseconds);} 

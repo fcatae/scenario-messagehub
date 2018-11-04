@@ -28,9 +28,21 @@ public class Flow {
         });
     }
 
+    public static void wait(Flow[] flows) {	
+        // start all flows
+        for(Flow flow : flows)	 {
+            flow.start();
+        }
+
+        // wait for each flow
+        for(Flow flow : flows)	 {
+            flow.join();
+        }
+	}
+
     public void start() {
         if(this.actionStarted == true) {
-            throw new IllegalStateException("flow already started");
+            return;
         }
         this.actionStarted = true;
         this.thread.start();
