@@ -1,10 +1,27 @@
 package net.catae.messagehub;
 
 public class Account {
-	public Account(String name) {		
+	private String name;
+	private int amount;
+	
+	public Account(String name) {
+		this.name = name;
+		this.amount = 0;
+	}
+
+	public int getAmount() {
+		return amount;
+	}
+
+	public void setAmount(int amount) {
+		this.amount = amount;
+	}
+
+	public String getName() {
+		return name;
 	}
 	
-	public static Account create(String name) {
-		return new Account(name);
+	public void credit(int value) {
+		this.amount += value;
 	}
 }
