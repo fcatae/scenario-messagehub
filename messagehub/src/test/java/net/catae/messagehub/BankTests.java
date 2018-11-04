@@ -71,15 +71,17 @@ public class BankTests {
 		// perform negative operations
 		b.credit(a, -100);
 		b.debit(a, -50);
-		assertEquals(b.total(), 950);
+		assertEquals(a.getAmount(), -50);
+		assertEquals(b.total(), 1050);
 
 		// check negative balance
-		b.credit(a, 1000);
+		b.credit(a, 1100);
 		assertEquals(b.total(), -50);
 
 		// perform zero operation
 		b.credit(a, 0);
 		b.debit(a, 0);
+		assertEquals(b.total(), -50);
 
 		// test initialization
 		Branch b0 = new Branch("b1", 0);
@@ -114,6 +116,27 @@ public class BankTests {
 		assertEquals(b.total(), 1000);
 	}
 
+	@Test
+	public void TestSimpleFlow() {		
+		Branch b = new Branch("b", 10);
+		Account a = new Account("a");
+		Account aaa = new Account("aaa");
+
+		// Test: b(10) -> a -> aaa
+		int amount = b.total();
+		
+		b.credit(a, amount);
+		
+		for(int i=0; i<amount; i++) {
+			b.transfer(a, aaa, 1);
+		}
+		
+		// Expected result: b -> a -> aaa(10)
+		assertEquals("b", b.total(), 0);
+		assertEquals("a", a.getAmount(), 0);
+		assertEquals("aaa", aaa.getAmount(), 10);
+	}
+	
 	void assertThrown(Class<? extends Exception> cex, Action action) {
 		try {
 			action.exec();
