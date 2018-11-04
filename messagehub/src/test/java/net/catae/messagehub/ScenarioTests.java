@@ -24,4 +24,25 @@ public class ScenarioTests {
 		assertEquals("a", a.getAmount(), 0);
 		assertEquals("aaa", aaa.getAmount(), 10);
 	}	
+
+	@Test
+	public void TestScenarioFlow() {
+
+		Scenario scenario = new Scenario("scene1", () -> {
+			sleep(10);
+		});
+		
+		scenario.start();
+		
+		sleep(5);
+		assertEquals(scenario.hasFinished(), false);
+
+		sleep(10);
+		assertEquals(scenario.hasFinished(), true);
+	}
+
+	void sleep(int miliseconds) {
+		try {Thread.sleep(miliseconds);} 
+		catch(Exception ex) {}
+	}
 }
