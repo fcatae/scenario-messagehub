@@ -1,8 +1,10 @@
 package net.catae.messagehub;
 
 public class Bank {
-	public Flow flow(String name, int amount, FlowExecution f) {
-		return new Flow();
+	public Flow flow(String name, int amount, Flow.Action f) {
+		Branch branch = new Branch(name, amount);
+
+		return new Flow(branch, f);
 	}
 
 	public Account account(String name) {
