@@ -7,11 +7,11 @@ public class Flow {
     private boolean actionFinished = false;
     private Exception lastException = null;
 
-    public Flow(Branch branch, Flow.Action action) {
+    public Flow(Branch branch, Action action) {
         thread = createThread(branch, action);
     }
 
-    private Thread createThread(Branch branch, Flow.Action action) {
+	private Thread createThread(Branch branch, Action action) {
         return new Thread(new Runnable(){        
             @Override
             public void run() {
