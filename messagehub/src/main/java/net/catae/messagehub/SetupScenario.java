@@ -48,7 +48,7 @@ public class SetupScenario implements CommandLineRunner {
 		});		
 	}
 	
-	static void commonFlow(Branch b, Account a, Account aaa) {
+	public static void commonFlow(Branch b, Account a, Account aaa) {
 		
 		int amount = b.total();
 		
