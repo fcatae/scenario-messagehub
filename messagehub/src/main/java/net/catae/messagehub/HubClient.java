@@ -2,29 +2,25 @@ package net.catae.messagehub;
 
 import java.time.Duration;
 import java.util.Collections;
-import java.util.List;
 import java.util.Properties;
-import java.util.Set;
 
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
-import org.apache.kafka.common.PartitionInfo;
-import org.apache.kafka.common.TopicPartition;
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.stereotype.Component;
+//import org.springframework.boot.CommandLineRunner;
+//import org.springframework.stereotype.Component;
 
-@Component
-public class HubClient implements CommandLineRunner {
-
+//@Component
+public class HubClient {
+	//	implements CommandLineRunner
 	String TOPIC = "messageh";
 
-	@Override
+	//@Override
 	public void run(String... args) throws Exception {
-		//runProducer();
-		//runConsumer();
+		runProducer();
+		runConsumer();
 	}
 
 	public void runConsumer() throws Exception {
@@ -49,14 +45,9 @@ public class HubClient implements CommandLineRunner {
 
 		consumer.seekToBeginning(consumer.assignment());
 
-		List<PartitionInfo> parts = consumer.partitionsFor(TOPIC);
-		
-
 		try {
 			while(true) {
 				ConsumerRecords<Long, String> consumerRecords = consumer.poll(Duration.ofSeconds(5));
-
-				Set<TopicPartition> a = consumer.assignment();
 
 				for(ConsumerRecord<Long, String> cr : consumerRecords) {
 					System.out.printf("(%d): %s\n", cr.partition(), cr.value());
@@ -82,8 +73,6 @@ public class HubClient implements CommandLineRunner {
 
 		KafkaProducer<Long,String> producer = new KafkaProducer<>(config);
 		
-		List<PartitionInfo> parts = producer.partitionsFor(TOPIC);
-
 		for(int j = 0; j < 10; j++) {
 			for(int i = 0; i < 1000; i++) {
 				//producer.send(new ProducerRecord<String, String>("my-topic", Integer.toString(i), Integer.toString(i)));
